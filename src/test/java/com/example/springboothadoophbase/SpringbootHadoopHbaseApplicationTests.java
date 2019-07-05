@@ -18,7 +18,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @description: hbaseTemplate操作 hbase
+ * @author:  yangzheng
+ * @date: 2019/7/5 : 16:27
+ * @version:  1.0
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringbootHadoopHbaseApplicationTests {

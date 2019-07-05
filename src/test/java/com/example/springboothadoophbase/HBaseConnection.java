@@ -8,24 +8,34 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
 
+/**
+ * @description: java 操作hbase
+ * @author:  yangzheng
+ * @date: 2019/7/5 : 16:27
+ * @version:  1.0
+ */
 public class HBaseConnection {
 
     public static void main(String[] args) throws IOException {
-        //第一步，设置HBsae配置信息
-        Configuration configuration = HBaseConfiguration.create();
-        //注意。这里这行目前没有注释掉的，这行和问题3有关系  是要根据自己zookeeper.znode.parent的配置信息进行修改。
-//        configuration.set("zookeeper.znode.parent","/hbase-unsecure"); //与 hbase-site-xml里面的配置信息 zookeeper.znode.parent 一致
-        configuration.set("hbase.zookeeper.quorum","192.168.53.10");  //hbase 服务地址
-        configuration.set("hbase.zookeeper.property.clientPort","2181"); //端口号
-        //这里使用的是接口Admin   该接口有一个实现类HBaseAdmin   也可以直接使用这个实现类
-        // HBaseAdmin baseAdmin = new HBaseAdmin(configuration);
-        Admin admin = ConnectionFactory.createConnection(configuration).getAdmin();
+
 //        list(admin);
 //        insert();
         get();
     }
 
-    public static void list(Admin admin){
+    /**
+     * 列出所有表
+     * @throws IOException
+     */
+    public static void list() throws IOException {
+        //第一步，设置HBsae配置信息
+        Configuration configuration = HBaseConfiguration.create();
+        //注意。这里这行目前没有注释掉的，这行和问题3有关系  是要根据自己zookeeper.znode.parent的配置信息进行修改。
+        configuration.set("hbase.zookeeper.quorum","192.168.53.10");  //hbase 服务地址
+        configuration.set("hbase.zookeeper.property.clientPort","2181"); //端口号
+        //这里使用的是接口Admin   该接口有一个实现类HBaseAdmin   也可以直接使用这个实现类
+        // HBaseAdmin baseAdmin = new HBaseAdmin(configuration);
+        Admin admin = ConnectionFactory.createConnection(configuration).getAdmin();
         if(admin !=null){
             try {
                 //获取到数据库所有表信息
@@ -39,6 +49,10 @@ public class HBaseConnection {
         }
     }
 
+    /**
+     * 插入一行
+     * @throws IOException
+     */
     public static void insert() throws IOException {
         Configuration config = HBaseConfiguration.create();
         config.set("hbase.zookeeper.quorum","192.168.53.10");  //hbase 服务地址
