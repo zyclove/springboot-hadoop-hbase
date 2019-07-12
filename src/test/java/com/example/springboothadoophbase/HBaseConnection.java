@@ -18,9 +18,9 @@ public class HBaseConnection {
 
     public static void main(String[] args) throws IOException {
 
-//        list(admin);
+        list();
 //        insert();
-        get();
+//        get();
     }
 
     /**
