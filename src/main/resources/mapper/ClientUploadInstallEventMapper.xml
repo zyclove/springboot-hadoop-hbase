@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboothadoophbase.dao.ClientUploadInstallEventMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="event" property="event" jdbcType="VARCHAR" />
+    <result column="package_name" property="packageName" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="android_id" property="androidId" jdbcType="VARCHAR" />
+    <result column="system" property="system" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="media_source" property="mediaSource" jdbcType="VARCHAR" />
+    <result column="adjust_id" property="adjustId" jdbcType="VARCHAR" />
+    <result column="appsflyer_id" property="appsflyerId" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="campaign" property="campaign" jdbcType="VARCHAR" />
+    <result column="ad" property="ad" jdbcType="VARCHAR" />
+    <result column="adset" property="adset" jdbcType="VARCHAR" />
+    <result column="upload_time1" property="uploadTime1" jdbcType="TIMESTAMP" />
+    <result column="upload_time2" property="uploadTime2" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="build_id" property="buildId" jdbcType="VARCHAR" />
+    <result column="build_model" property="buildModel" jdbcType="VARCHAR" />
+    <result column="language_country" property="languageCountry" jdbcType="VARCHAR" />
+    <result column="rdid_advertisingid" property="rdidAdvertisingid" jdbcType="VARCHAR" />
+    <result column="event_timestamp" property="eventTimestamp" jdbcType="BIGINT" />
+    <result column="agency" property="agency" jdbcType="VARCHAR" />
+    <result column="creative" property="creative" jdbcType="VARCHAR" />
+    <result column="adgroup" property="adgroup" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, event, package_name, version, android_id, system, country, media_source, adjust_id, 
+    appsflyer_id, channel, campaign, ad, adset, upload_time1, upload_time2, create_time, 
+    build_id, build_model, language_country, rdid_advertisingid, event_timestamp, agency, 
+    creative, adgroup
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEventExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from client_upload_install_event
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_upload_install_event
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from client_upload_install_event
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEventExample" >
+    delete from client_upload_install_event
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
+    insert into client_upload_install_event (id, event, package_name, 
+      version, android_id, system, 
+      country, media_source, adjust_id, 
+      appsflyer_id, channel, campaign, 
+      ad, adset, upload_time1, 
+      upload_time2, create_time, build_id, 
+      build_model, language_country, rdid_advertisingid, 
+      event_timestamp, agency, creative, 
+      adgroup)
+    values (#{id,jdbcType=BIGINT}, #{event,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{androidId,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{mediaSource,jdbcType=VARCHAR}, #{adjustId,jdbcType=VARCHAR}, 
+      #{appsflyerId,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, #{campaign,jdbcType=VARCHAR}, 
+      #{ad,jdbcType=VARCHAR}, #{adset,jdbcType=VARCHAR}, #{uploadTime1,jdbcType=TIMESTAMP}, 
+      #{uploadTime2,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{buildId,jdbcType=VARCHAR}, 
+      #{buildModel,jdbcType=VARCHAR}, #{languageCountry,jdbcType=VARCHAR}, #{rdidAdvertisingid,jdbcType=VARCHAR}, 
+      #{eventTimestamp,jdbcType=BIGINT}, #{agency,jdbcType=VARCHAR}, #{creative,jdbcType=VARCHAR}, 
+      #{adgroup,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
+    insert into client_upload_install_event
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="event != null" >
+        event,
+      </if>
+      <if test="packageName != null" >
+        package_name,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="androidId != null" >
+        android_id,
+      </if>
+      <if test="system != null" >
+        system,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="mediaSource != null" >
+        media_source,
+      </if>
+      <if test="adjustId != null" >
+        adjust_id,
+      </if>
+      <if test="appsflyerId != null" >
+        appsflyer_id,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="campaign != null" >
+        campaign,
+      </if>
+      <if test="ad != null" >
+        ad,
+      </if>
+      <if test="adset != null" >
+        adset,
+      </if>
+      <if test="uploadTime1 != null" >
+        upload_time1,
+      </if>
+      <if test="uploadTime2 != null" >
+        upload_time2,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="buildId != null" >
+        build_id,
+      </if>
+      <if test="buildModel != null" >
+        build_model,
+      </if>
+      <if test="languageCountry != null" >
+        language_country,
+      </if>
+      <if test="rdidAdvertisingid != null" >
+        rdid_advertisingid,
+      </if>
+      <if test="eventTimestamp != null" >
+        event_timestamp,
+      </if>
+      <if test="agency != null" >
+        agency,
+      </if>
+      <if test="creative != null" >
+        creative,
+      </if>
+      <if test="adgroup != null" >
+        adgroup,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="event != null" >
+        #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null" >
+        #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="androidId != null" >
+        #{androidId,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null" >
+        #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaSource != null" >
+        #{mediaSource,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustId != null" >
+        #{adjustId,jdbcType=VARCHAR},
+      </if>
+      <if test="appsflyerId != null" >
+        #{appsflyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="campaign != null" >
+        #{campaign,jdbcType=VARCHAR},
+      </if>
+      <if test="ad != null" >
+        #{ad,jdbcType=VARCHAR},
+      </if>
+      <if test="adset != null" >
+        #{adset,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime1 != null" >
+        #{uploadTime1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadTime2 != null" >
+        #{uploadTime2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buildId != null" >
+        #{buildId,jdbcType=VARCHAR},
+      </if>
+      <if test="buildModel != null" >
+        #{buildModel,jdbcType=VARCHAR},
+      </if>
+      <if test="languageCountry != null" >
+        #{languageCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="rdidAdvertisingid != null" >
+        #{rdidAdvertisingid,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTimestamp != null" >
+        #{eventTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="agency != null" >
+        #{agency,jdbcType=VARCHAR},
+      </if>
+      <if test="creative != null" >
+        #{creative,jdbcType=VARCHAR},
+      </if>
+      <if test="adgroup != null" >
+        #{adgroup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEventExample" resultType="java.lang.Integer" >
+    select count(*) from client_upload_install_event
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update client_upload_install_event
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.event != null" >
+        event = #{record.event,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packageName != null" >
+        package_name = #{record.packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.androidId != null" >
+        android_id = #{record.androidId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.system != null" >
+        system = #{record.system,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mediaSource != null" >
+        media_source = #{record.mediaSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adjustId != null" >
+        adjust_id = #{record.adjustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appsflyerId != null" >
+        appsflyer_id = #{record.appsflyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.campaign != null" >
+        campaign = #{record.campaign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ad != null" >
+        ad = #{record.ad,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adset != null" >
+        adset = #{record.adset,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadTime1 != null" >
+        upload_time1 = #{record.uploadTime1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uploadTime2 != null" >
+        upload_time2 = #{record.uploadTime2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buildId != null" >
+        build_id = #{record.buildId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildModel != null" >
+        build_model = #{record.buildModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.languageCountry != null" >
+        language_country = #{record.languageCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rdidAdvertisingid != null" >
+        rdid_advertisingid = #{record.rdidAdvertisingid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventTimestamp != null" >
+        event_timestamp = #{record.eventTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.agency != null" >
+        agency = #{record.agency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creative != null" >
+        creative = #{record.creative,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adgroup != null" >
+        adgroup = #{record.adgroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update client_upload_install_event
+    set id = #{record.id,jdbcType=BIGINT},
+      event = #{record.event,jdbcType=VARCHAR},
+      package_name = #{record.packageName,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      android_id = #{record.androidId,jdbcType=VARCHAR},
+      system = #{record.system,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      media_source = #{record.mediaSource,jdbcType=VARCHAR},
+      adjust_id = #{record.adjustId,jdbcType=VARCHAR},
+      appsflyer_id = #{record.appsflyerId,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      campaign = #{record.campaign,jdbcType=VARCHAR},
+      ad = #{record.ad,jdbcType=VARCHAR},
+      adset = #{record.adset,jdbcType=VARCHAR},
+      upload_time1 = #{record.uploadTime1,jdbcType=TIMESTAMP},
+      upload_time2 = #{record.uploadTime2,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      build_id = #{record.buildId,jdbcType=VARCHAR},
+      build_model = #{record.buildModel,jdbcType=VARCHAR},
+      language_country = #{record.languageCountry,jdbcType=VARCHAR},
+      rdid_advertisingid = #{record.rdidAdvertisingid,jdbcType=VARCHAR},
+      event_timestamp = #{record.eventTimestamp,jdbcType=BIGINT},
+      agency = #{record.agency,jdbcType=VARCHAR},
+      creative = #{record.creative,jdbcType=VARCHAR},
+      adgroup = #{record.adgroup,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
+    update client_upload_install_event
+    <set >
+      <if test="event != null" >
+        event = #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null" >
+        package_name = #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="androidId != null" >
+        android_id = #{androidId,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null" >
+        system = #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaSource != null" >
+        media_source = #{mediaSource,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustId != null" >
+        adjust_id = #{adjustId,jdbcType=VARCHAR},
+      </if>
+      <if test="appsflyerId != null" >
+        appsflyer_id = #{appsflyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="campaign != null" >
+        campaign = #{campaign,jdbcType=VARCHAR},
+      </if>
+      <if test="ad != null" >
+        ad = #{ad,jdbcType=VARCHAR},
+      </if>
+      <if test="adset != null" >
+        adset = #{adset,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime1 != null" >
+        upload_time1 = #{uploadTime1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadTime2 != null" >
+        upload_time2 = #{uploadTime2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buildId != null" >
+        build_id = #{buildId,jdbcType=VARCHAR},
+      </if>
+      <if test="buildModel != null" >
+        build_model = #{buildModel,jdbcType=VARCHAR},
+      </if>
+      <if test="languageCountry != null" >
+        language_country = #{languageCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="rdidAdvertisingid != null" >
+        rdid_advertisingid = #{rdidAdvertisingid,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTimestamp != null" >
+        event_timestamp = #{eventTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="agency != null" >
+        agency = #{agency,jdbcType=VARCHAR},
+      </if>
+      <if test="creative != null" >
+        creative = #{creative,jdbcType=VARCHAR},
+      </if>
+      <if test="adgroup != null" >
+        adgroup = #{adgroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
+    update client_upload_install_event
+    set event = #{event,jdbcType=VARCHAR},
+      package_name = #{packageName,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      android_id = #{androidId,jdbcType=VARCHAR},
+      system = #{system,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      media_source = #{mediaSource,jdbcType=VARCHAR},
+      adjust_id = #{adjustId,jdbcType=VARCHAR},
+      appsflyer_id = #{appsflyerId,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      campaign = #{campaign,jdbcType=VARCHAR},
+      ad = #{ad,jdbcType=VARCHAR},
+      adset = #{adset,jdbcType=VARCHAR},
+      upload_time1 = #{uploadTime1,jdbcType=TIMESTAMP},
+      upload_time2 = #{uploadTime2,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      build_id = #{buildId,jdbcType=VARCHAR},
+      build_model = #{buildModel,jdbcType=VARCHAR},
+      language_country = #{languageCountry,jdbcType=VARCHAR},
+      rdid_advertisingid = #{rdidAdvertisingid,jdbcType=VARCHAR},
+      event_timestamp = #{eventTimestamp,jdbcType=BIGINT},
+      agency = #{agency,jdbcType=VARCHAR},
+      creative = #{creative,jdbcType=VARCHAR},
+      adgroup = #{adgroup,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
