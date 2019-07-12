@@ -54,6 +54,31 @@ public class SpringbootHadoopHbaseApplicationTests {
         }
     }
 
+    @Test
+    public void createTable() {
+        String tableName = "client_upload_install_event";
+        String[] column = {
+                "property"
+                            };
+        HBaseAdmin admin;
+        try {
+            // 从hbaseTemplate 获取configuration对象,用来初始化admin
+            admin = new HBaseAdmin(hbaseTemplate.getConfiguration());
+            HTableDescriptor tableDescriptor = new HTableDescriptor(tableName);
+            for (int i = 0; i < column.length; i++) {
+                tableDescriptor.addFamily(new HColumnDescriptor(column[i]));
+            }
+            admin.createTable(tableDescriptor);
+            System.out.println(tableName);
+        } catch (MasterNotRunningException e) {
+            e.printStackTrace();
+        } catch (ZooKeeperConnectionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      *数据插入
@@ -65,10 +90,87 @@ public class SpringbootHadoopHbaseApplicationTests {
     public void execute() {
 //        insert();
 //        System.out.println(get("hbase-test1","123","c1","name"));
-        List<Map<String, Object>> row = find("hbase-test1", "123", "124");
+        List<Map<String, Object>> row = find("client_upload_install_event", "2019-07-12bff75e7c8e0296b2com.recorder.capture.videoeditor.gamelive", "property");
         for (Map<String, Object> stringObjectMap : row) {
             System.out.println(stringObjectMap);
+            System.out.println(stringObjectMap.get("property_upload_time2"));
         }
+//        insertTable();
+    }
+
+    public boolean insertTable(){
+        String tableName = "client_upload_install_event";
+        return  hbaseTemplate.execute(tableName,(hTableInterface)->{
+            boolean flag = false;
+            try{
+                Put put = new Put("1".getBytes());
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("package_name"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("version"),Bytes.toBytes("1.2"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("android_id"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("system"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("country"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("media_source"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("appsflyer_id"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("channel"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("campaign"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("ad"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("adset"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("upload_time1"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("upload_time2"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("create_time"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("build_id"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("build_model"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("language_country"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("event_timestamp"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("rdid_advertisingid"),Bytes.toBytes("com.1234.com"));
+
+                put.add(Bytes.toBytes("property"),
+                        Bytes.toBytes("agency"),Bytes.toBytes("com.1234.com"));
+
+                hTableInterface.put(put);
+                flag = true;
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return flag;
+        });
     }
 
     public boolean insert(){
