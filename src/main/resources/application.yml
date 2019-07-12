@@ -1,6 +1,6 @@
 hbase:
   zookeeper:
-    quorum: 192.168.53.10
+    quorum: 192.168.53.10,192.168.53.11,192.168.53.12
     property:
       clientPort: 2181
 spring:
