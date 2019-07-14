@@ -1,8 +1,13 @@
 package com.example.springboothadoophbase;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.example.springboothadoophbase.dao.ClientUploadInstallEventMapper;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEvent;
+import com.example.springboothadoophbase.entity.ClientUploadInstallEventExample;
 import com.example.springboothadoophbase.util.DateUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.CompareFilter;
@@ -10,6 +15,7 @@ import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.RegexStringComparator;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.util.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +40,16 @@ public class MysqlToHbaseTest {
 
     @Test
     public void test(){
-        ClientUploadInstallEvent clientUploadInstallEvent = clientUploadInstallEventMapper.selectByPrimaryKey(1707596L);
-        insertTable(clientUploadInstallEvent);
+        PageHelper.startPage(1, 10);
+        ClientUploadInstallEventExample clientUploadInstallEventExample = new ClientUploadInstallEventExample();
+        clientUploadInstallEventExample.setOrderByClause("id desc");
+        List<ClientUploadInstallEvent> clientUploadInstallEvents = clientUploadInstallEventMapper.selectByExample(clientUploadInstallEventExample);
+        new PageInfo<>(clientUploadInstallEvents);
+        if(!CollectionUtils.isEmpty(clientUploadInstallEvents)){
+            for (ClientUploadInstallEvent clientUploadInstallEvent : clientUploadInstallEvents) {
+                insertTable(clientUploadInstallEvent);
+            }
+        }
     }
 
     public boolean insertTable(ClientUploadInstallEvent clientUploadInstallEvent){
@@ -52,26 +66,41 @@ public class MysqlToHbaseTest {
             boolean flag = false;
             try{
                 Put put = new Put(rowKey.getBytes());
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("package_name"),Bytes.toBytes(packageName));
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("version"),Bytes.toBytes(clientUploadInstallEvent.getVersion()));
+                if(packageName!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("package_name"), Bytes.toBytes(packageName));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("android_id"),Bytes.toBytes(androidId));
+                if(clientUploadInstallEvent.getVersion()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("version"), Bytes.toBytes(clientUploadInstallEvent.getVersion()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("system"),Bytes.toBytes(clientUploadInstallEvent.getSystem()));
+                if(androidId!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("android_id"), Bytes.toBytes(androidId));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("country"),Bytes.toBytes(clientUploadInstallEvent.getCountry()));
+                if(clientUploadInstallEvent.getSystem()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("system"), Bytes.toBytes(clientUploadInstallEvent.getSystem()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("media_source"),Bytes.toBytes(clientUploadInstallEvent.getMediaSource()));
+                if(clientUploadInstallEvent.getCountry()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("country"), Bytes.toBytes(clientUploadInstallEvent.getCountry()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("appsflyer_id"),Bytes.toBytes(clientUploadInstallEvent.getAppsflyerId()));
+                if(clientUploadInstallEvent.getMediaSource()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("media_source"), Bytes.toBytes(clientUploadInstallEvent.getMediaSource()));
+                }
+
+                if(clientUploadInstallEvent.getAppsflyerId()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("appsflyer_id"), Bytes.toBytes(clientUploadInstallEvent.getAppsflyerId()));
+                }
 
                 if(clientUploadInstallEvent.getChannel()!=null) {
                     put.addColumn(Bytes.toBytes("property"),
@@ -93,29 +122,45 @@ public class MysqlToHbaseTest {
                             Bytes.toBytes("adset"), Bytes.toBytes(clientUploadInstallEvent.getAdset()));
                 }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("upload_time1"),Bytes.toBytes(DateUtil.dateToStrLong(clientUploadInstallEvent.getUploadTime1())));
+                if(clientUploadInstallEvent.getUploadTime1()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("upload_time1"), Bytes.toBytes(DateUtil.dateToStrLong(clientUploadInstallEvent.getUploadTime1())));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("upload_time2"),Bytes.toBytes(DateUtil.dateToStrLong(clientUploadInstallEvent.getUploadTime2())));
+                if(clientUploadInstallEvent.getUploadTime2()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("upload_time2"), Bytes.toBytes(DateUtil.dateToStrLong(clientUploadInstallEvent.getUploadTime2())));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("create_time"),Bytes.toBytes(DateUtil.dateToStrLong(clientUploadInstallEvent.getCreateTime())));
+                if(clientUploadInstallEvent.getCreateTime()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("create_time"), Bytes.toBytes(DateUtil.dateToStrLong(clientUploadInstallEvent.getCreateTime())));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("build_id"),Bytes.toBytes(clientUploadInstallEvent.getBuildId()));
+                if(clientUploadInstallEvent.getBuildId()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("build_id"), Bytes.toBytes(clientUploadInstallEvent.getBuildId()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("build_model"),Bytes.toBytes(clientUploadInstallEvent.getBuildModel()));
+                if(clientUploadInstallEvent.getBuildModel()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("build_model"), Bytes.toBytes(clientUploadInstallEvent.getBuildModel()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("language_country"),Bytes.toBytes(clientUploadInstallEvent.getLanguageCountry()));
+                if(clientUploadInstallEvent.getLanguageCountry()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("language_country"), Bytes.toBytes(clientUploadInstallEvent.getLanguageCountry()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("event_timestamp"),Bytes.toBytes(clientUploadInstallEvent.getEventTimestamp().toString()));
+                if(clientUploadInstallEvent.getLanguageCountry()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("event_timestamp"), Bytes.toBytes(clientUploadInstallEvent.getEventTimestamp().toString()));
+                }
 
-                put.addColumn(Bytes.toBytes("property"),
-                        Bytes.toBytes("rdid_advertisingid"),Bytes.toBytes(clientUploadInstallEvent.getRdidAdvertisingid()));
+                if(clientUploadInstallEvent.getRdidAdvertisingid()!=null) {
+                    put.addColumn(Bytes.toBytes("property"),
+                            Bytes.toBytes("rdid_advertisingid"), Bytes.toBytes(clientUploadInstallEvent.getRdidAdvertisingid()));
+                }
 
                 if(clientUploadInstallEvent.getAgency()!=null) {
                     put.addColumn(Bytes.toBytes("property"),
@@ -134,8 +179,9 @@ public class MysqlToHbaseTest {
 
     @Test
     public void get(){
-        String key = "com.dailyhoroscope.facesecret";
+        String key = "a34db91574eb4449_com.dailyhoroscope.facesecret";
         List<Map<String, Object>> like = getLike1(key);
+        System.out.println(JSON.toJSONString(like));
         System.out.println(like);
     }
 
