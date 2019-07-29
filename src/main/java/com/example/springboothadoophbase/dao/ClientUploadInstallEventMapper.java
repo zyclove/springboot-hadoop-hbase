@@ -2,10 +2,10 @@ package com.example.springboothadoophbase.dao;
 
 import com.example.springboothadoophbase.entity.ClientUploadInstallEvent;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEventExample;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface ClientUploadInstallEventMapper {

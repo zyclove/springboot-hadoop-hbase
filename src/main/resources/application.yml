@@ -7,9 +7,9 @@ spring:
   datasource:
     name: facesecretservice
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://207.148.17.204:3306/subscription?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/subscription?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: .DHB7b2nVkoVyM5EY
+    password: 123456
     ###################以下为druid增加的配置###########################
     type: com.alibaba.druid.pool.DruidDataSource
     # 下面为连接池的补充设置，应用到上面所有数据源中
@@ -48,3 +48,9 @@ pagehelper:
   reasonable: true
   supportMethodsArguments:  true
   params: count=countSql
+
+phoenix:
+  driver: org.apache.phoenix.jdbc.PhoenixDriver
+  url:  jdbc:phoenix:hadoop1:2181,jdbc:phoenix:hadoop2:2181,jdbc:phoenix:hadoop3:2181
+  user: root
+  password: 123456

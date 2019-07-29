@@ -3,14 +3,12 @@
 <mapper namespace="com.example.springboothadoophbase.dao.ClientUploadInstallEventMapper" >
   <resultMap id="BaseResultMap" type="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="event" property="event" jdbcType="VARCHAR" />
     <result column="package_name" property="packageName" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="VARCHAR" />
     <result column="android_id" property="androidId" jdbcType="VARCHAR" />
     <result column="system" property="system" jdbcType="VARCHAR" />
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="media_source" property="mediaSource" jdbcType="VARCHAR" />
-    <result column="adjust_id" property="adjustId" jdbcType="VARCHAR" />
     <result column="appsflyer_id" property="appsflyerId" jdbcType="VARCHAR" />
     <result column="channel" property="channel" jdbcType="VARCHAR" />
     <result column="campaign" property="campaign" jdbcType="VARCHAR" />
@@ -25,8 +23,6 @@
     <result column="rdid_advertisingid" property="rdidAdvertisingid" jdbcType="VARCHAR" />
     <result column="event_timestamp" property="eventTimestamp" jdbcType="BIGINT" />
     <result column="agency" property="agency" jdbcType="VARCHAR" />
-    <result column="creative" property="creative" jdbcType="VARCHAR" />
-    <result column="adgroup" property="adgroup" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -87,10 +83,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, event, package_name, version, android_id, system, country, media_source, adjust_id, 
-    appsflyer_id, channel, campaign, ad, adset, upload_time1, upload_time2, create_time, 
-    build_id, build_model, language_country, rdid_advertisingid, event_timestamp, agency, 
-    creative, adgroup
+    id, package_name, version, android_id, system, country, media_source, appsflyer_id, 
+    channel, campaign, ad, adset, upload_time1, upload_time2, create_time, build_id, 
+    build_model, language_country, rdid_advertisingid, event_timestamp, agency
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEventExample" >
     select
@@ -123,33 +118,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
-    insert into client_upload_install_event (id, event, package_name, 
-      version, android_id, system, 
-      country, media_source, adjust_id, 
-      appsflyer_id, channel, campaign, 
-      ad, adset, upload_time1, 
-      upload_time2, create_time, build_id, 
-      build_model, language_country, rdid_advertisingid, 
-      event_timestamp, agency, creative, 
-      adgroup)
-    values (#{id,jdbcType=BIGINT}, #{event,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, 
-      #{version,jdbcType=VARCHAR}, #{androidId,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, 
-      #{country,jdbcType=VARCHAR}, #{mediaSource,jdbcType=VARCHAR}, #{adjustId,jdbcType=VARCHAR}, 
-      #{appsflyerId,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, #{campaign,jdbcType=VARCHAR}, 
-      #{ad,jdbcType=VARCHAR}, #{adset,jdbcType=VARCHAR}, #{uploadTime1,jdbcType=TIMESTAMP}, 
-      #{uploadTime2,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{buildId,jdbcType=VARCHAR}, 
-      #{buildModel,jdbcType=VARCHAR}, #{languageCountry,jdbcType=VARCHAR}, #{rdidAdvertisingid,jdbcType=VARCHAR}, 
-      #{eventTimestamp,jdbcType=BIGINT}, #{agency,jdbcType=VARCHAR}, #{creative,jdbcType=VARCHAR}, 
-      #{adgroup,jdbcType=VARCHAR})
+    insert into client_upload_install_event (id, package_name, version, 
+      android_id, system, country, 
+      media_source, appsflyer_id, channel, 
+      campaign, ad, adset, 
+      upload_time1, upload_time2, create_time, 
+      build_id, build_model, language_country, 
+      rdid_advertisingid, event_timestamp, agency
+      )
+    values (#{id,jdbcType=BIGINT}, #{packageName,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{androidId,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{mediaSource,jdbcType=VARCHAR}, #{appsflyerId,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, 
+      #{campaign,jdbcType=VARCHAR}, #{ad,jdbcType=VARCHAR}, #{adset,jdbcType=VARCHAR}, 
+      #{uploadTime1,jdbcType=TIMESTAMP}, #{uploadTime2,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{buildId,jdbcType=VARCHAR}, #{buildModel,jdbcType=VARCHAR}, #{languageCountry,jdbcType=VARCHAR}, 
+      #{rdidAdvertisingid,jdbcType=VARCHAR}, #{eventTimestamp,jdbcType=BIGINT}, #{agency,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
     insert into client_upload_install_event
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
-      </if>
-      <if test="event != null" >
-        event,
       </if>
       <if test="packageName != null" >
         package_name,
@@ -168,9 +158,6 @@
       </if>
       <if test="mediaSource != null" >
         media_source,
-      </if>
-      <if test="adjustId != null" >
-        adjust_id,
       </if>
       <if test="appsflyerId != null" >
         appsflyer_id,
@@ -214,19 +201,10 @@
       <if test="agency != null" >
         agency,
       </if>
-      <if test="creative != null" >
-        creative,
-      </if>
-      <if test="adgroup != null" >
-        adgroup,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
-      </if>
-      <if test="event != null" >
-        #{event,jdbcType=VARCHAR},
       </if>
       <if test="packageName != null" >
         #{packageName,jdbcType=VARCHAR},
@@ -245,9 +223,6 @@
       </if>
       <if test="mediaSource != null" >
         #{mediaSource,jdbcType=VARCHAR},
-      </if>
-      <if test="adjustId != null" >
-        #{adjustId,jdbcType=VARCHAR},
       </if>
       <if test="appsflyerId != null" >
         #{appsflyerId,jdbcType=VARCHAR},
@@ -291,12 +266,6 @@
       <if test="agency != null" >
         #{agency,jdbcType=VARCHAR},
       </if>
-      <if test="creative != null" >
-        #{creative,jdbcType=VARCHAR},
-      </if>
-      <if test="adgroup != null" >
-        #{adgroup,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEventExample" resultType="java.lang.Integer" >
@@ -310,9 +279,6 @@
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.event != null" >
-        event = #{record.event,jdbcType=VARCHAR},
       </if>
       <if test="record.packageName != null" >
         package_name = #{record.packageName,jdbcType=VARCHAR},
@@ -331,9 +297,6 @@
       </if>
       <if test="record.mediaSource != null" >
         media_source = #{record.mediaSource,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adjustId != null" >
-        adjust_id = #{record.adjustId,jdbcType=VARCHAR},
       </if>
       <if test="record.appsflyerId != null" >
         appsflyer_id = #{record.appsflyerId,jdbcType=VARCHAR},
@@ -377,12 +340,6 @@
       <if test="record.agency != null" >
         agency = #{record.agency,jdbcType=VARCHAR},
       </if>
-      <if test="record.creative != null" >
-        creative = #{record.creative,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adgroup != null" >
-        adgroup = #{record.adgroup,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -391,14 +348,12 @@
   <update id="updateByExample" parameterType="map" >
     update client_upload_install_event
     set id = #{record.id,jdbcType=BIGINT},
-      event = #{record.event,jdbcType=VARCHAR},
       package_name = #{record.packageName,jdbcType=VARCHAR},
       version = #{record.version,jdbcType=VARCHAR},
       android_id = #{record.androidId,jdbcType=VARCHAR},
       system = #{record.system,jdbcType=VARCHAR},
       country = #{record.country,jdbcType=VARCHAR},
       media_source = #{record.mediaSource,jdbcType=VARCHAR},
-      adjust_id = #{record.adjustId,jdbcType=VARCHAR},
       appsflyer_id = #{record.appsflyerId,jdbcType=VARCHAR},
       channel = #{record.channel,jdbcType=VARCHAR},
       campaign = #{record.campaign,jdbcType=VARCHAR},
@@ -412,9 +367,7 @@
       language_country = #{record.languageCountry,jdbcType=VARCHAR},
       rdid_advertisingid = #{record.rdidAdvertisingid,jdbcType=VARCHAR},
       event_timestamp = #{record.eventTimestamp,jdbcType=BIGINT},
-      agency = #{record.agency,jdbcType=VARCHAR},
-      creative = #{record.creative,jdbcType=VARCHAR},
-      adgroup = #{record.adgroup,jdbcType=VARCHAR}
+      agency = #{record.agency,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -422,9 +375,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
     update client_upload_install_event
     <set >
-      <if test="event != null" >
-        event = #{event,jdbcType=VARCHAR},
-      </if>
       <if test="packageName != null" >
         package_name = #{packageName,jdbcType=VARCHAR},
       </if>
@@ -442,9 +392,6 @@
       </if>
       <if test="mediaSource != null" >
         media_source = #{mediaSource,jdbcType=VARCHAR},
-      </if>
-      <if test="adjustId != null" >
-        adjust_id = #{adjustId,jdbcType=VARCHAR},
       </if>
       <if test="appsflyerId != null" >
         appsflyer_id = #{appsflyerId,jdbcType=VARCHAR},
@@ -488,25 +435,17 @@
       <if test="agency != null" >
         agency = #{agency,jdbcType=VARCHAR},
       </if>
-      <if test="creative != null" >
-        creative = #{creative,jdbcType=VARCHAR},
-      </if>
-      <if test="adgroup != null" >
-        adgroup = #{adgroup,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.springboothadoophbase.entity.ClientUploadInstallEvent" >
     update client_upload_install_event
-    set event = #{event,jdbcType=VARCHAR},
-      package_name = #{packageName,jdbcType=VARCHAR},
+    set package_name = #{packageName,jdbcType=VARCHAR},
       version = #{version,jdbcType=VARCHAR},
       android_id = #{androidId,jdbcType=VARCHAR},
       system = #{system,jdbcType=VARCHAR},
       country = #{country,jdbcType=VARCHAR},
       media_source = #{mediaSource,jdbcType=VARCHAR},
-      adjust_id = #{adjustId,jdbcType=VARCHAR},
       appsflyer_id = #{appsflyerId,jdbcType=VARCHAR},
       channel = #{channel,jdbcType=VARCHAR},
       campaign = #{campaign,jdbcType=VARCHAR},
@@ -520,9 +459,7 @@
       language_country = #{languageCountry,jdbcType=VARCHAR},
       rdid_advertisingid = #{rdidAdvertisingid,jdbcType=VARCHAR},
       event_timestamp = #{eventTimestamp,jdbcType=BIGINT},
-      agency = #{agency,jdbcType=VARCHAR},
-      creative = #{creative,jdbcType=VARCHAR},
-      adgroup = #{adgroup,jdbcType=VARCHAR}
+      agency = #{agency,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

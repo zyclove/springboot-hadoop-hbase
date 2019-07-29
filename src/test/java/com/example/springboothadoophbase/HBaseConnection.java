@@ -3,6 +3,7 @@ package com.example.springboothadoophbase;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 
@@ -15,6 +16,8 @@ import java.io.IOException;
  * @version:  1.0
  */
 public class HBaseConnection {
+
+
 
     public static void main(String[] args) throws IOException {
 
@@ -39,9 +42,9 @@ public class HBaseConnection {
         if(admin !=null){
             try {
                 //获取到数据库所有表信息
-                HTableDescriptor[] allTable = admin.listTables();
-                for (HTableDescriptor hTableDescriptor : allTable) {
-                    System.out.println(hTableDescriptor.getNameAsString());
+                TableName[] tableNames = admin.listTableNames();
+                for (TableName tableName : tableNames) {
+                    System.out.println(tableName);
                 }
             }catch (IOException e) {
                 e.printStackTrace();
@@ -58,26 +61,27 @@ public class HBaseConnection {
         config.set("hbase.zookeeper.quorum","192.168.53.10");  //hbase 服务地址
         config.set("hbase.zookeeper.property.clientPort","2181"); //端口号
         // Instantiating HTable class
-        HTable hTable = new HTable(config, "hbase-test1");
+        Connection connection = ConnectionFactory.createConnection(config);
+        Table table = connection.getTable(TableName.valueOf("hbase-test1"));
 
         // Instantiating Put class
         // accepts a row name.
-        Put p = new Put(Bytes.toBytes("row1"));
+        Put p = new Put(Bytes.toBytes("row2"));
 
         // adding values using add() method
         // accepts column family name, qualifier/row name ,value
-        p.add(Bytes.toBytes("c1"),
+        p.addColumn(Bytes.toBytes("c1"),
                 Bytes.toBytes("name"),Bytes.toBytes("raju"));
 
-        p.add(Bytes.toBytes("c2"),
+        p.addColumn(Bytes.toBytes("c2"),
                 Bytes.toBytes("city"),Bytes.toBytes("hyderabad"));
 
         // Saving the put Instance to the HTable.
-        hTable.put(p);
+        table.put(p);
         System.out.println("data inserted");
 
         // closing HTable
-        hTable.close();
+        table.close();
     }
 
     public static void get() throws IOException {
@@ -86,7 +90,8 @@ public class HBaseConnection {
         config.set("hbase.zookeeper.quorum","192.168.53.10");  //hbase 服务地址
         config.set("hbase.zookeeper.property.clientPort","2181"); //端口号
         // Instantiating HTable class
-        HTable table = new HTable(config, "hbase-test1");
+        Connection connection = ConnectionFactory.createConnection(config);
+        Table table = connection.getTable(TableName.valueOf("hbase-test1"));
 
         // Instantiating Get class
         Get g = new Get(Bytes.toBytes("row1"));
