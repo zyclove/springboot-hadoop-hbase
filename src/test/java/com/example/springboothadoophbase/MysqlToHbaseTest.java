@@ -1,6 +1,6 @@
 package com.example.springboothadoophbase;
 
-import com.alibaba.fastjson.JSON;
+import com.example.springboothadoophbase.config.HbaseConfig;
 import com.example.springboothadoophbase.dao.ClientUploadInstallEventMapper;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEvent;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEventExample;
@@ -16,6 +16,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,13 +26,18 @@ import java.util.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MysqlToHbaseTest {
+
+    @Autowired
+    @Qualifier("hbaseConnection")
+    Connection hbaseConnection;
+
     @Autowired
     ClientUploadInstallEventMapper clientUploadInstallEventMapper;
 
     @Test
     public void contextLoads() throws IOException {
         Configuration config = HBaseConfiguration.create();
-        config.set("hbase.zookeeper.quorum", "192.168.53.10");  //hbase 服务地址
+        config.set("hbase.zookeeper.quorum", "192.168.53.134");  //hbase 服务地址
         config.set("hbase.zookeeper.property.clientPort", "2181"); //端口号
         Connection connection = ConnectionFactory.createConnection(config);
         String tableName = "CLIENT_UPLOAD_INSTALL_EVENT";
@@ -60,14 +66,14 @@ public class MysqlToHbaseTest {
     public void test() throws IOException {
 
         Configuration config = HBaseConfiguration.create();
-        config.set("hbase.zookeeper.quorum","192.168.53.10,192.168.53.11,192.168.53.12");  //hbase 服务地址
+        config.set("hbase.zookeeper.quorum","192.168.53.134");  //hbase 服务地址
         config.set("hbase.zookeeper.property.clientPort","2181"); //端口号
         Connection connection = ConnectionFactory.createConnection(config);
 
         String tableName = "CLIENT_UPLOAD_INSTALL_EVENT";
         Table table = connection.getTable(TableName.valueOf(tableName));
-        for(int i =46;i<200;i++) {
-            PageHelper.startPage(i, 10000);
+//        for(int i =46;i<200;i++) {
+            PageHelper.startPage(1, 10000);
             ClientUploadInstallEventExample clientUploadInstallEventExample = new ClientUploadInstallEventExample();
 //        clientUploadInstallEventExample.setOrderByClause("id desc");
             List<ClientUploadInstallEvent> clientUploadInstallEvents = clientUploadInstallEventMapper.selectByExample(clientUploadInstallEventExample);
@@ -77,7 +83,7 @@ public class MysqlToHbaseTest {
                     insertTable(table, clientUploadInstallEvent);
                 }
             }
-        }
+//        }
 
         table.close();
         connection.close();
@@ -202,41 +208,28 @@ public class MysqlToHbaseTest {
         table.put(put);
     }
 
-    @Test
-    public void get() throws IOException {
-//        String key = "8761bcce3848cf38";
-//        List<Map<String, Object>> like = getLike1(key);
-//        System.out.println(JSON.toJSONString(like));
-//        System.out.println(like);
-//        System.out.println(like.size());
-//        getLike1(key);
-
-        String key = "googleadwords_int";
-        getLineLike(key);
-//        System.out.println(JSON.toJSONString(like));
-//        System.out.println(like);
-//        System.out.println(like.size());
-    }
 
     /**
      * 行键过滤
-     * @param key
      * @return
      */
-    public void getLike1(String key) throws IOException {
-        String tableName = "client_upload_install_event";
+    @Test
+    public void getLike1() throws IOException {
+        String key = "912dae477b89e8a3";
+        String tableName = "CLIENT_UPLOAD_INSTALL_EVENT";
         Filter filter2 = new RowFilter(CompareOperator.EQUAL, new RegexStringComparator(key));
         Scan scan = new Scan();
         scan.setFilter(filter2);
-        Configuration config = HBaseConfiguration.create();
-        config.set("hbase.zookeeper.quorum", "192.168.53.10");  //hbase 服务地址
-        config.set("hbase.zookeeper.property.clientPort", "2181"); //端口号
-        Connection connection = ConnectionFactory.createConnection(config);
-        Table table = connection.getTable(TableName.valueOf(tableName));
+        Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
         ResultScanner scanner = table.getScanner(scan);
         try {
             for (Result rr = scanner.next(); rr != null; rr = scanner.next()) {
-                System.out.println("Found row: " + rr);
+                NavigableMap<byte[], byte[]> property = rr.getFamilyMap(Bytes.toBytes("PROPERTY"));
+                for(NavigableMap.Entry<byte[], byte[]> entry : property.entrySet()){
+                    String mapKey = new String(entry.getKey(),"utf-8");
+                    String mapValue = new String(entry.getValue(),"utf-8");
+                    System.out.println(mapKey+":"+mapValue);
+                }
             }
         } finally {
             scanner.close();
@@ -244,37 +237,9 @@ public class MysqlToHbaseTest {
         if (table != null) {
             table.close();
         }
-        connection.close();
+        hbaseConnection.close();
     }
-//    /**
-//     * 行键过滤
-//     * @param key
-//     * @return
-//     */
-//    public List<Map<String, Object>> getLike2(String key){
-//        String tableName = "us_population";
-//        Filter filter2 = new RowFilter(CompareOperator.EQUAL,new RegexStringComparator(key));
-//        Scan scan=new Scan();
-//        scan.setFilter(filter2);
-//        return hbaseTemplate.find(tableName, scan,(result,rowNum)->{
-//            List<Cell> ceList = result.listCells();
-//            Map<String,Object> map = new HashMap<>();
-//            String  row = "";
-//            if(ceList!=null&&ceList.size()>0){
-//                for(Cell cell:ceList){
-//                    row =Bytes.toString( cell.getRowArray(), cell.getRowOffset(), cell.getRowLength());
-//                    String value =Bytes.toString( cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
-////                    String family =  Bytes.toString(cell.getFamilyArray(),cell.getFamilyOffset(),cell.getFamilyLength());
-//                    String quali = Bytes.toString( cell.getQualifierArray(),cell.getQualifierOffset(),cell.getQualifierLength());
-//                    map.put(quali, value);
-//                }
-//                map.put("row",row );
-//            }
-//            return  map;});
-//
-//    }
-//
-//
+
     /**
      * 列过滤
      * @param key
@@ -314,5 +279,11 @@ public class MysqlToHbaseTest {
             table.close();
         }
         connection.close();
+    }
+
+    @Test
+    public void getAndroidInstallcount() throws Exception {
+        String date = "2019-07-21";
+
     }
 }

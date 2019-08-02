@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboothadoophbase.dao.mysql.AndroidInstallCountMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboothadoophbase.entity.AndroidInstallCount" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="app" property="app" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="campaign" property="campaign" jdbcType="VARCHAR" />
+    <result column="agency" property="agency" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="media_source" property="mediaSource" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, count, date, app, version, campaign, agency, country, media_source, create_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from android_install_count
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from android_install_count
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from android_install_count
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCountExample" >
+    delete from android_install_count
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCount" >
+    insert into android_install_count (id, count, date, 
+      app, version, campaign, 
+      agency, country, media_source, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
+      #{app,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{campaign,jdbcType=VARCHAR}, 
+      #{agency,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{mediaSource,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCount" >
+    insert into android_install_count
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="app != null" >
+        app,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="campaign != null" >
+        campaign,
+      </if>
+      <if test="agency != null" >
+        agency,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="mediaSource != null" >
+        media_source,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="app != null" >
+        #{app,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="campaign != null" >
+        #{campaign,jdbcType=VARCHAR},
+      </if>
+      <if test="agency != null" >
+        #{agency,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaSource != null" >
+        #{mediaSource,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCountExample" resultType="java.lang.Integer" >
+    select count(*) from android_install_count
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update android_install_count
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.app != null" >
+        app = #{record.app,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.campaign != null" >
+        campaign = #{record.campaign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agency != null" >
+        agency = #{record.agency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mediaSource != null" >
+        media_source = #{record.mediaSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update android_install_count
+    set id = #{record.id,jdbcType=BIGINT},
+      count = #{record.count,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      app = #{record.app,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      campaign = #{record.campaign,jdbcType=VARCHAR},
+      agency = #{record.agency,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      media_source = #{record.mediaSource,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCount" >
+    update android_install_count
+    <set >
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="app != null" >
+        app = #{app,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="campaign != null" >
+        campaign = #{campaign,jdbcType=VARCHAR},
+      </if>
+      <if test="agency != null" >
+        agency = #{agency,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaSource != null" >
+        media_source = #{mediaSource,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboothadoophbase.entity.AndroidInstallCount" >
+    update android_install_count
+    set count = #{count,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      app = #{app,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      campaign = #{campaign,jdbcType=VARCHAR},
+      agency = #{agency,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      media_source = #{mediaSource,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="testPhoenix" resultType="java.lang.Integer">
+        select count(1) from CLIENT_UPLOAD_INSTALL_EVENT
+  </select>
+</mapper>

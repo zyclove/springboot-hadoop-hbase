@@ -1,6 +1,6 @@
 hbase:
   zookeeper:
-    quorum: 192.168.53.10,192.168.53.11,192.168.53.12
+    quorum: 192.168.53.134
     property:
       clientPort: 2181
 spring:
@@ -31,13 +31,12 @@ spring:
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
     # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall,log4j
+    filters: stat,wall,logback
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
     ###############以上为配置druid添加的配置########################################
-
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.springboothadoophbase.entity
@@ -49,8 +48,12 @@ pagehelper:
   supportMethodsArguments:  true
   params: count=countSql
 
+# phoenix 数据源自定义配置
 phoenix:
-  driver: org.apache.phoenix.jdbc.PhoenixDriver
-  url:  jdbc:phoenix:hadoop1:2181,jdbc:phoenix:hadoop2:2181,jdbc:phoenix:hadoop3:2181
-  user: root
-  password: 123456
+  enable: true
+  url: jdbc:phoenix:192.168.53.134:2181
+  driver-class-name: org.apache.phoenix.jdbc.PhoenixDriver
+  username:
+  password:
+  default-auto-commit: true
+

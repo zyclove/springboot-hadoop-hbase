@@ -77,6 +77,22 @@ public class DateUtil {
 
 	/**
 	 * 获取Y - M的date
+	 *
+	 * @return 返回时间类型 yyyy-MM-dd HH:mm
+	 */
+	public static Date getYMDDate(String time) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = formatter.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
+	/**
+	 * 获取Y - M的date
 	 * 
 	 * @return 返回时间类型 yyyy-MM-dd HH:mm
 	 */

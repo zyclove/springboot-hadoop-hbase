@@ -37,7 +37,7 @@ public class PhoenixTest {
         ResultSet rs;
         Connection con = DriverManager.getConnection("jdbc:phoenix:hadoop1,hadoop2,hadoop3:2181");
         stmt = con.createStatement();
-        String sql = "select * from CLIENT_UPLOAD_INSTALL_EVENT";
+        String sql = "select * from CLIENT_UPLOAD_INSTALL_EVENT where ANDROID_ID = '1591a20e9277721c' limit 1";
         rs = stmt.executeQuery(sql);
         while (rs.next()) {
             System.out.print("ANDROID_ID:"+rs.getString("ANDROID_ID"));
@@ -57,9 +57,9 @@ public class PhoenixTest {
         }
         Statement stmt;
         ResultSet rs;
-        Connection con = DriverManager.getConnection("jdbc:phoenix:hadoop1,hadoop2,hadoop3:2181");
+        Connection con = DriverManager.getConnection("jdbc:phoenix:192.168.53.134:2181");
         stmt = con.createStatement();
-        String sql = "select count(*) from us_population";
+        String sql = "select count(1) from CLIENT_UPLOAD_INSTALL_EVENT";
         rs = stmt.executeQuery(sql);
         while (rs.next()) {
             System.out.print("count:"+rs.getInt("COUNT(1)"));
