@@ -1,7 +1,6 @@
 package com.example.springboothadoophbase;
 
-import com.example.springboothadoophbase.config.HbaseConfig;
-import com.example.springboothadoophbase.dao.ClientUploadInstallEventMapper;
+import com.example.springboothadoophbase.dao.mysql.ClientUploadInstallEventMapper;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEvent;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEventExample;
 import com.example.springboothadoophbase.util.DateUtil;

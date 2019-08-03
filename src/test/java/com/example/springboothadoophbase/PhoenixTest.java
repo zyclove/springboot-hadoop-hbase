@@ -1,12 +1,10 @@
 package com.example.springboothadoophbase;
 
-import com.example.springboothadoophbase.dao.ClientUploadInstallEventMapper;
+import com.example.springboothadoophbase.dao.mysql.ClientUploadInstallEventMapper;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEvent;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEventExample;
 import com.example.springboothadoophbase.util.DateUtil;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

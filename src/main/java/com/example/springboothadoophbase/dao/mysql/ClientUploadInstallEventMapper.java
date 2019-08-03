@@ -1,4 +1,4 @@
-package com.example.springboothadoophbase.dao;
+package com.example.springboothadoophbase.dao.mysql;
 
 import com.example.springboothadoophbase.entity.ClientUploadInstallEvent;
 import com.example.springboothadoophbase.entity.ClientUploadInstallEventExample;
