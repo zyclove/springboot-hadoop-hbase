@@ -1,11 +1,18 @@
 package com.example.springboothadoophbase;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.LocalFileSystem;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.security.UserGroupInformation;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 
@@ -17,27 +24,28 @@ import java.io.IOException;
  */
 public class HBaseConnection {
 
-
-
-    public static void main(String[] args) throws IOException {
-
-        list();
-//        insert();
-//        get();
-    }
-
     /**
      * 列出所有表
      * @throws IOException
      */
-    public static void list() throws IOException {
-        //第一步，设置HBsae配置信息
+    public static void main(String[] args)throws IOException {
+
+        System.setProperty("java.security.krb5.conf", "D:\\javaProject\\springboot-hadoop-hbase\\src\\main\\resources\\kerberos\\krb5.conf");
+//
+//        //第一步，设置HBsae配置信息
         Configuration configuration = HBaseConfiguration.create();
         //注意。这里这行目前没有注释掉的，这行和问题3有关系  是要根据自己zookeeper.znode.parent的配置信息进行修改。
-        configuration.set("hbase.zookeeper.quorum","192.168.53.10");  //hbase 服务地址
+        configuration.set("hbase.zookeeper.quorum","hbaseserver");  //hbase 服务地址
         configuration.set("hbase.zookeeper.property.clientPort","2181"); //端口号
+        configuration.set("hadoop.security.authentication", "kerberos");
+        configuration.set("hbase.security.authentication", "kerberos");
+        configuration.set("hbase.master.kerberos.principal", "root/hbaseserver@GS.COM");
         //这里使用的是接口Admin   该接口有一个实现类HBaseAdmin   也可以直接使用这个实现类
-        // HBaseAdmin baseAdmin = new HBaseAdmin(configuration);
+        UserGroupInformation.setConfiguration(configuration);
+        UserGroupInformation.loginUserFromKeytab("root/hbaseserver@GS.COM", "D:\\javaProject\\springboot-hadoop-hbase\\src\\main\\resources\\kerberos\\root.keytab");
+
+
+
         Admin admin = ConnectionFactory.createConnection(configuration).getAdmin();
         if(admin !=null){
             try {

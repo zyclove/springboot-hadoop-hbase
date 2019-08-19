@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringbootHadoopHbaseApplication {
 
     public static void main(String[] args) {
+        System.setProperty("java.security.krb5.conf", "D:\\javaProject\\springboot-hadoop-hbase\\src\\main\\resources\\kerberos\\krb5.conf");
         SpringApplication.run(SpringbootHadoopHbaseApplication.class, args);
+        System.err.println("SpringbootHadoopHbaseApplication =======> 启动成功");
     }
 
 }
